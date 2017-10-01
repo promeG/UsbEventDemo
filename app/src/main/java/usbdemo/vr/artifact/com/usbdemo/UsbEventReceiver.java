@@ -20,11 +20,14 @@ public class UsbEventReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!Foreground.get().isForeground()) {
-            Log.d("UsbEventReceiver", "app不在前台，忽略 usb event...");
-            return;
-        }
+
         if(ACTION_USB_KEY_EVENT.equals(intent.getAction())){
+
+            if (!Foreground.get().isForeground()) {
+                Log.d("UsbEventReceiver", "app不在前台，忽略 usb event...");
+                return;
+            }
+
             int event = intent.getIntExtra("event", -1);
             switch (event) {
                 case KEYCODE_UP:
